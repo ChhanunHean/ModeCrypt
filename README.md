@@ -1,288 +1,259 @@
 # ModeCrypt
 
-![ModeCrypt Banner](assets/modecrypt-banner.jpg)
+<p align="center">
+  <img src="assets/modecrypt-banner.jpg" alt="ModeCrypt - Cryptanalysis and Attack Simulation Toolkit" width="100%">
+</p>
 
-### Cryptanalysis, Cryptographic Analysis & Attack Simulation Toolkit
+<p align="center">
+  <strong>Cryptanalysis, Cryptographic Analysis & Attack Simulation Toolkit</strong>
+</p>
 
-ModeCrypt is a Python-based cryptographic research and security testing toolkit designed to explore cryptographic algorithms, analyze ciphertext, investigate encryption modes, and simulate cryptographic attacks.
-
-It combines cryptanalysis, cryptographic analysis, and attack simulation in one modular framework.
-
-The project is intended for cybersecurity students, penetration testers, developers, and security researchers who want to understand how cryptographic systems work, identify potential weaknesses, and study practical attack techniques in controlled environments.
-
-> **Project Status:** Under Active Development — V1
+<p align="center">
+  A cybersecurity research project exploring cryptographic algorithms, encryption modes, potential weaknesses, and attack techniques.
+</p>
 
 ---
 
-## Overview
+## About the Project
 
-Cryptography is essential for protecting sensitive information, but incorrect implementations and insecure configurations can introduce vulnerabilities.
+**ModeCrypt** is a Python-based cryptography research toolkit designed to combine cryptanalysis, cryptographic analysis, and attack simulation in one platform.
 
-ModeCrypt aims to make cryptographic analysis and attack research more accessible through a collection of analysis modules and attack techniques.
+The project aims to help cybersecurity students, penetration testers, developers, and security researchers understand how cryptographic systems work, analyze their behavior, and explore potential vulnerabilities in different encryption algorithms and modes of operation.
 
-The framework currently focuses on two main components:
+ModeCrypt is currently in its early development stage. Its features, architecture, and testing capabilities will continue to evolve throughout development.
 
-- **Cryptanalysis Engine:** Analyzes encodings, hashes, ciphertext characteristics, block sizes, encryption modes, and algorithm information.
-- **Cryptographic Attack Engine:** Provides implementations and analysis tools for studying weaknesses in different cryptographic modes.
+## Project Objectives
 
-ModeCrypt is modular, allowing individual analysis and attack modules to be developed, tested, and improved independently.
+- Analyze cryptographic algorithms and encryption modes.
+- Identify potential patterns and weaknesses in ciphertext.
+- Explore cryptographic vulnerabilities through controlled attack simulations.
+- Demonstrate how implementation mistakes can affect cryptographic security.
+- Provide practical learning and research capabilities for cybersecurity enthusiasts.
+- Build a modular platform that can be extended with additional cryptographic analysis techniques.
 
-## Features
+## Core Engines
+
+ModeCrypt is designed around two main engines.
 
 ### 1. Cryptanalysis Engine
 
-| Module                | Description                                                        |
-| --------------------- | ------------------------------------------------------------------ |
-| Encoding Analysis     | Detects and analyzes common encoding formats.                      |
-| Hash Analysis         | Identifies possible hash algorithms based on hash characteristics. |
-| Ciphertext Statistics | Analyzes ciphertext characteristics and statistical patterns.      |
-| Block Analysis        | Examines block sizes and block-related properties.                 |
-| Mode Analysis         | Analyzes potential encryption-mode characteristics.                |
-| Algorithm Analysis    | Provides information about registered cryptographic algorithms.    |
+The Cryptanalysis Engine focuses on examining cryptographic data and identifying useful information about its structure and characteristics.
+
+| Module | Description |
+|---|---|
+| Encoding Analysis | Analyze and identify common data encodings. |
+| Hash Analysis | Examine hash formats and identify possible hash algorithms. |
+| Ciphertext Statistics | Analyze byte frequencies, entropy, and data patterns. |
+| Block Analysis | Examine ciphertext length and block-size characteristics. |
+| Mode Analysis | Analyze patterns that may indicate encryption-mode behavior. |
+| Algorithm Registry | Provide information about supported cryptographic algorithms. |
 
 ### 2. Cryptographic Attack Engine
 
-ModeCrypt includes attack and analysis modules for several encryption modes.
+The Cryptographic Attack Engine explores known weaknesses in encryption modes through controlled attack simulations.
 
-| Mode | Module                   | Purpose                                                          |
-| ---- | ------------------------ | ---------------------------------------------------------------- |
-| CBC  | Padding Oracle Attack    | Studies plaintext recovery through padding-validity information. |
-| GCM  | Nonce Reuse Analysis     | Investigates security consequences of nonce reuse.               |
-| GCM  | Authentication Analysis  | Examines authentication-related security properties.             |
-| CTR  | Keystream Reuse Analysis | Studies vulnerabilities caused by keystream reuse.               |
-| ECB  | Pattern Analysis         | Identifies repeated-block patterns in ciphertext.                |
-| CFB  | Bit-Flipping Analysis    | Studies ciphertext modification and its effects on plaintext.    |
-| OFB  | Keystream Analysis       | Examines keystream reuse and related weaknesses.                 |
+| Encryption Mode | Planned Analysis / Attack |
+|---|---|
+| CBC | Padding Oracle Attack |
+| GCM | Nonce Reuse and Authentication Analysis |
+| CTR | Keystream Reuse Analysis |
+| ECB | Repeated-Block and Pattern Analysis |
+| CFB | Bit-Flipping and Malleability Analysis |
+| OFB | Keystream Reuse Analysis |
 
-**Note:** These modules have different implementation and validation levels. Their presence does not mean every possible attack scenario is supported.
+**Important:** These attacks do not work against every implementation of an encryption mode. Their success depends on specific vulnerabilities, implementation behavior, and security configurations.
 
-## Architecture
+## Project Architecture
 
-ModeCrypt follows a modular architecture with two main engines.
-
-```text
-                  ModeCrypt
-                      |
-          +-----------+-----------+
-          |                       |
-   Cryptanalysis Engine    Cryptographic Attack Engine
-          |                       |
-   +------+------+          +----+----+----+----+
-   |      |      |          |    |    |    |    |
-Encoding Hash Statistics   CBC  GCM  CTR  ECB  CFB/OFB
-Analysis Analysis Analysis   |    |    |    |    |
-   |      |      |         Padding Nonce Keystream Pattern
-Block  Mode  Algorithm     Oracle Reuse Reuse Analysis
-Analysis Analysis Analysis
-```
-
-### Project Structure
+ModeCrypt is being developed with a modular architecture to make it easier to maintain, extend, and integrate new analysis and attack techniques.
 
 ```text
 ModeCrypt/
+│
+├── assets/
+│   └── modecrypt-banner.jpg
+│
 ├── src/
 │   └── modecrypt/
+│       │
 │       ├── analysis/
+│       │   ├── _common.py
+│       │   ├── algorithm_detection.py
+│       │   ├── block_analysis.py
+│       │   ├── encoding.py
+│       │   ├── hash_analysis.py
+│       │   ├── mode_detection.py
+│       │   └── statistics.py
+│       │
 │       ├── attacks/
+│       │   ├── base.py
 │       │   ├── cbc/
-│       │   ├── cfb/
+│       │   ├── gcm/
 │       │   ├── ctr/
 │       │   ├── ecb/
-│       │   ├── gcm/
+│       │   ├── cfb/
 │       │   └── ofb/
+│       │
 │       ├── core/
 │       ├── crypto/
 │       ├── labs/
 │       ├── reports/
 │       ├── utils/
+│       │
 │       ├── cli.py
 │       └── main.py
+│
 ├── tests/
+│
 ├── pyproject.toml
 └── README.md
 ```
 
-## Installation
+*The architecture may change as development progresses.*
+
+## Getting Started
 
 ### Requirements
 
-- Python 3.12 (used in current development and testing)
-- pip
+- Python 3.12 or later
 - Git
+- pip
 
-### Clone the repository
+### Installation
+
+**1. Clone the repository**
 
 ```bash
-git clone https://github.com/ChhanunHean/Padding-Oracle-Attack-Lab.git
+git clone https://github.com/YOUR_USERNAME/ModeCrypt.git
 cd ModeCrypt
 ```
 
-### Create a virtual environment
+**2. Create a virtual environment**
+
+macOS / Linux:
 
 ```bash
 python3 -m venv .venv
-```
-
-Activate it:
-
-**macOS / Linux**
-
-```bash
 source .venv/bin/activate
 ```
 
-**Windows**
+Windows:
 
 ```powershell
+python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### Install ModeCrypt
+**3. Install the project**
 
 ```bash
-python -m pip install --upgrade pip
 pip install -e .
 ```
 
 ## Usage
 
-### View available commands
+ModeCrypt is designed to provide a command-line interface for interacting with its cryptographic analysis and attack modules.
+
+Display available commands:
 
 ```bash
 modecrypt --help
 ```
 
-### Available command groups
+The planned command groups include:
 
-```text
-analyze
-encoding
-statistics
-hash
-block
-mode
-algorithm
-attack
-lab
-gcm
-ctr
-ecb
-cfb
-ofb
-```
+| Command Group | Purpose |
+|---|---|
+| `analyze` | General cryptographic analysis |
+| `encoding` | Encoding analysis |
+| `statistics` | Ciphertext statistics |
+| `hash` | Hash analysis |
+| `block` | Block-size analysis |
+| `mode` | Encryption-mode analysis |
+| `algorithm` | Algorithm information |
+| `attack` | Cryptographic attack simulations |
+| `lab` | Controlled practical experiments |
 
-### CBC Padding Oracle Lab
+*Specific commands and options may change during development.*
 
-Run the built-in CBC padding oracle demonstration:
+## Research and Testing
 
-```bash
-modecrypt attack cbc-padding-oracle --lab
-```
+Testing is an important part of ModeCrypt's development.
 
-The lab demonstrates how a padding oracle can expose plaintext without requiring knowledge of the AES secret key.
+The project aims to use unit tests, independent test implementations, and controlled experiments to evaluate the correctness and reliability of its cryptographic analysis and attack modules.
 
-The current development environment has successfully demonstrated:
+Planned testing activities include:
 
-- Detection of the built-in CBC padding oracle.
-- Recovery of all four ciphertext blocks.
-- Independent padding verification of recovered blocks.
-- Byte-for-byte comparison against the lab's known plaintext.
+- Testing different plaintext and ciphertext lengths.
+- Evaluating encryption-mode behavior.
+- Testing attack implementations against independent cryptographic implementations.
+- Examining edge cases and invalid inputs.
+- Evaluating how attack modules respond to unreliable or unavailable oracles.
+- Verifying recovered results independently.
 
-**Important:** The built-in lab is a controlled demonstration. It does not establish that every external CBC implementation is vulnerable.
-
-## Testing
-
-ModeCrypt uses pytest for automated testing and Ruff for code quality checks.
-
-Run the complete test suite:
+Run the test suite:
 
 ```bash
 python -m pytest -v
 ```
 
-Run code quality checks:
+Check code quality:
 
 ```bash
 ruff check src tests
 ```
 
-### Current Development Verification
+## Development Roadmap
 
-Latest local verification:
+ModeCrypt is under active development. The following roadmap represents the project's development direction.
 
-| Check                      | Result            |
-| -------------------------- | ----------------- |
-| Automated tests            | 195 passed        |
-| Ruff                       | All checks passed |
-| CBC padding oracle lab     | SUCCESS           |
-| CBC recovered blocks       | 4/4               |
-| Known plaintext comparison | Match             |
-
-These results represent the current development test environment, not a guarantee of complete security or correctness.
+- [ ] Improve the Cryptanalysis Engine.
+- [ ] Expand encryption-mode analysis capabilities.
+- [ ] Develop and improve cryptographic attack modules.
+- [ ] Strengthen independent testing and verification.
+- [ ] Improve command-line usability.
+- [ ] Develop detailed analysis and reporting capabilities.
+- [ ] Improve documentation and practical examples.
+- [ ] Explore additional cryptographic research techniques.
 
 ## Security and Responsible Use
 
-ModeCrypt is intended for:
+ModeCrypt is intended for educational purposes, cybersecurity research, and authorized security testing.
 
-- Cryptographic education and research.
-- Authorized security testing.
-- Controlled attack simulations.
-- Cryptographic implementation analysis.
-- Understanding cryptographic weaknesses.
+Users should only perform attack simulations against systems, applications, and cryptographic implementations they own or have explicit permission to test.
 
-Only use ModeCrypt against systems, applications, and data that you own or have explicit permission to test.
-
-The CBC padding oracle demonstration uses a built-in local lab. Do not use cryptographic attack techniques against unauthorized systems.
+The project focuses on understanding cryptographic weaknesses and the conditions that make certain attacks possible.
 
 ## Limitations
 
-ModeCrypt is actively under development.
-
-Current limitations include:
-
-- Not every cryptographic attack scenario is implemented.
-- Analysis results may identify candidates rather than definitive algorithms.
-- Attack success depends on the target's cryptographic implementation and observable behavior.
-- CBC padding oracle attacks require an oracle that reveals padding validity.
-- Cryptographic attack modules require further independent validation.
-- Passing automated tests does not prove the absence of implementation vulnerabilities.
-
-## Roadmap
-
-Planned development directions:
-
-- [ ] Modular cryptanalysis architecture.
-- [ ] Cryptographic attack module structure.
-- [ ] CBC padding oracle lab.
-- [ ] Initial analysis modules for multiple encryption modes.
-- [ ] Independent CBC attack validation.
-- [ ] Improve cryptographic analysis accuracy.
-- [ ] Expand attack simulation capabilities.
-- [ ] Improve reporting and evidence presentation.
-- [ ] Expand automated test coverage.
-- [ ] Documentation and usage examples.
-
-Roadmap items may change as development progresses.
+- Cryptographic analysis does not always identify an algorithm or encryption mode with certainty.
+- Hash identification produces possible candidates rather than guaranteed results.
+- Attack success depends on the target implementation and its security properties.
+- Some attack techniques require specific vulnerabilities, such as observable padding-validation behavior.
+- Experimental results should not be treated as proof that a cryptographic implementation is secure or insecure.
 
 ## Contributing
 
-Contributions, bug reports, feature suggestions, and research discussions are welcome.
+Contributions, suggestions, and discussions are welcome.
 
-If you want to contribute:
+If you are interested in improving ModeCrypt:
 
 1. Fork the repository.
 2. Create a feature branch.
-3. Implement your changes.
-4. Add appropriate tests.
-5. Run the test suite and Ruff.
-6. Submit a pull request describing your changes.
+3. Make your changes.
+4. Add or update relevant tests.
+5. Submit a pull request.
 
 ## License
 
-License: To be determined.
+**License: To be determined.**
 
-A license will be added before public distribution. Until then, do not assume that the repository grants permission to reuse, modify, or redistribute its code.
+Until a license is added, all rights are reserved by the project owner. Please do not assume that the source code is available for unrestricted reuse or redistribution.
 
 ---
 
-**ModeCrypt — Understand the weaknesses behind cryptographic security.**
+<p align="center">
+  <strong>ModeCrypt</strong>
+  <br>
+  Understand the weaknesses behind cryptographic security.
+</p>
